@@ -1,28 +1,47 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="wrapper">
+    <div class="wrapper-content">
+      <section>
+        <div class="conteiner">
+          <div class="note-header">
+            <h1>{{ title }}</h1>
+          </div>
+          <div class="note" v-for="(note, index) in notes" :key="index">
+            <div>{{ note.title }} will be about: {{ note.descr }}</div>
+          </div>
+        </div>
+      </section>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  data() {
+    return {
+      title: "NOTE APP",
+      notes: [
+        {
+          title: "First Note",
+          descr: "Description for first note",
+          date: new Date(Date.now()).toLocaleString(),
+        },
+        {
+          title: "Second Note",
+          descr: "Description for second note",
+          date: new Date(Date.now()).toLocaleString(),
+        },
+        {
+          title: "Third Note",
+          descr: "Description for third note",
+          date: new Date(Date.now()).toLocaleString(),
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
