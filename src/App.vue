@@ -3,23 +3,18 @@
     <div class="wrapper-content">
       <section>
         <div class="conteiner">
-          <div class="note-header">
+          <div
+            class="note-header"
+            style="margin: 36px 0; justify-content: center"
+          >
             <h1>{{ title }}</h1>
-            <div class="message" v-if="message">
-              <p>{{ message }}</p>
-            </div>
+          </div>
+          <Message v-if="message" :message="message" />
 
-            <!-- ДОБАВЛЕНИЕ НОВОЙ ЗАМЕТКИ-->
-            <div class="new-note">
-              <input type="text" v-model="note.title" />
-              <textarea v-model="note.descr"></textarea>
-              <button @click="addNote">new note</button>
-            </div>
-          </div>
-          <div class="note" v-for="(note, index) in notes" :key="index">
-            <div>{{ note.title }} {{ note.descr }}</div>
-            <div>{{ note.date }}</div>
-          </div>
+          <NewNote :note="note" @addNote="addNote" />
+
+          <Notes :notes="notes"/>
+          <!--:notes это пропс, "notes" это массив с заметками-->
         </div>
       </section>
     </div>
@@ -27,17 +22,21 @@
 </template>
 
 <script>
+import Message from "@/components/Message.vue";
+import NewNote from "@/components/NewNote.vue";
+import Notes from "@/components/Notes.vue";
 export default {
   name: "App",
+  components: {
+    Message,
+    NewNote,
+    Notes,
+  },
+
   data() {
     return {
       title: "NOTE APP",
       message: null,
-      note: {
-        title: "",
-        descr: "",
-        date: new Date(Date.now()).toLocaleString(),
-      },
       notes: [
         {
           title: "First Note",
@@ -55,18 +54,30 @@ export default {
           date: new Date(Date.now()).toLocaleString(),
         },
       ],
+      note: {
+        title: "",
+        descr: "",
+        date: "",
+      },
     };
   },
+
   methods: {
     addNote() {
-      if (this.note.title === "") {
-        this.message = "it`s required field !";
+      let { title, descr } = this.note;
+      if (title === "") {
+        this.message = "FILL IT INPUT !!!";
         return false;
+      } else {
+        this.notes.push({
+          title,
+          descr,
+          date: new Date(Date.now()).toLocaleString(),
+        });
+        this.message = null;
+        this.note.title = "";
+        this.note.descr = "";
       }
-      this.notes.push(this.note);
-      this.message = null; // чтобы не выводилaсь ошибка при правильной отправке
-      this.note.title = ""; // сброс данных после отправки
-      this.note.descr = ""; //  ---------- // ------------
     },
   },
 };
