@@ -2,19 +2,16 @@
   <div class="wrapper">
     <div class="wrapper-content">
       <section>
-        <div class="conteiner">
-          <div
-            class="note-header"
-            style="margin: 36px 0; justify-content: center"
-          >
-            <h1>{{ title }}</h1>
-          </div>
+        <div class="container">
+          <h1>{{ title }}</h1>
+
           <Message v-if="message" :message="message" />
 
           <NewNote :note="note" @addNote="addNote" />
 
-          <Notes :notes="notes"/>
-          <!--:notes это пропс, "notes" это массив с заметками-->
+          <Notes :notes="notes" @remove="removeNote" />
+          <!--:notes это пропс, "notes" это массив с заметками
+               @remove это названия эмита, removeNote это название метода который создаём здесь (App)-->
         </div>
       </section>
     </div>
@@ -78,6 +75,9 @@ export default {
         this.note.title = "";
         this.note.descr = "";
       }
+    },
+    removeNote(index) {
+      this.notes.splice(index, 1); // inex - то, что удаляем, 1 - кол-во 
     },
   },
 };
