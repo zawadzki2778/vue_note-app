@@ -3,6 +3,7 @@
     <div class="wrapper-content">
       <section>
         <div class="container">
+
           <Message v-if="message" :message="message" />
 
           <NewNote :note="note" @addNote="addNote" />
@@ -11,6 +12,7 @@
             <h1 class="title">{{ title }}</h1>
 
             <Search />
+
             <div class="icons">
               <svg
                 :class="{ active: grid }"
@@ -55,7 +57,7 @@
 
           <Notes :notes="notes" @remove="removeNote" :grid="grid"/>
           <!--:notes это пропс, "notes" это массив с заметками
-               @remove это названия эмита, removeNote это название метода который создаём здесь (App)-->
+           @remove это названия эмита, removeNote это название метода который создаём здесь (App)-->
         </div>
       </section>
     </div>
