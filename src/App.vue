@@ -9,6 +9,8 @@
 
           <div class="note-header">
             <h1 class="title">{{ title }}</h1>
+
+            <Search />
             <div class="icons">
               <svg
                 :class="{ active: grid }"
@@ -64,12 +66,14 @@
 import Message from "@/components/Message.vue";
 import NewNote from "@/components/NewNote.vue";
 import Notes from "@/components/Notes.vue";
+import Search from "@/components/Search.vue"
 export default {
   name: "App",
   components: {
     Message,
     NewNote,
     Notes,
+    Search
   },
 
   data() {
