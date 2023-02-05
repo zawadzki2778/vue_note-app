@@ -3,20 +3,25 @@
     <div class="wrapper-content">
       <section>
         <div class="container">
-
           <Message v-if="message" :message="message" />
 
           <NewNote :note="note" @addNote="addNote" />
 
           <div class="note-header">
             <h1 class="title">{{ title }}</h1>
-
-            <Search />
+            <p>{{ search }}</p>
+          <!--1. нам нужно передать value из комп Search в комп App в search, который находится в data 
+              2. приравниваем к $event, который и есть val -->
+            <Search
+              :value="search"
+              placeholder="Find your note"
+              @search="search = $event" 
+            />
 
             <div class="icons">
               <svg
                 :class="{ active: grid }"
-                @click="grid=true"
+                @click="grid = true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
                 height="24"
@@ -55,7 +60,7 @@
             </div>
           </div>
 
-          <Notes :notes="notes" @remove="removeNote" :grid="grid"/>
+          <Notes :notes="notes" @remove="removeNote" :grid="grid" />
           <!--:notes это пропс, "notes" это массив с заметками
            @remove это названия эмита, removeNote это название метода который создаём здесь (App)-->
         </div>
@@ -68,14 +73,14 @@
 import Message from "@/components/Message.vue";
 import NewNote from "@/components/NewNote.vue";
 import Notes from "@/components/Notes.vue";
-import Search from "@/components/Search.vue"
+import Search from "@/components/Search.vue";
 export default {
   name: "App",
   components: {
     Message,
     NewNote,
     Notes,
-    Search
+    Search,
   },
 
   data() {
@@ -83,6 +88,7 @@ export default {
       title: "NOTE APP",
       message: null,
       grid: true, // <svg :class="{ active: grid }"
+      search: "",
       notes: [
         {
           title: "First Note",
