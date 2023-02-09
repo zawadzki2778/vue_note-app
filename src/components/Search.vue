@@ -30,25 +30,25 @@ export default {
   props: {
     value: {
       type: String,
-      require: true
+      require: true,
     },
     placeholder: {
       type: String,
-      default: 'Search'
-    }
+      default: "Search",
+    },
   },
-  data () {
-    return { 
-      search: '' 
-    }
+  data() {
+    return {
+      search: "",
+    };
   },
   watch: {
-    search (val) {
-      console.log(val)
-      this.$emit('search', val);
-    }
-  }
-}
+    search(val) {
+      console.log(val);
+      this.$emit("search", val);
+    },
+  },
+};
 </script>
 
 <style scoped>

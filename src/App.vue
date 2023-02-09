@@ -7,15 +7,14 @@
 
           <NewNote :note="note" @addNote="addNote" />
 
-          <div class="note-header">
+          <div class="note-header" style="margin: 36px 0">
             <h1 class="title">{{ title }}</h1>
-            <p>{{ search }}</p>
-          <!--1. нам нужно передать value из комп Search в комп App в search, который находится в data 
+            <!--1. нам нужно передать value из комп Search в комп App в search, который находится в data 
               2. приравниваем к $event, который и есть val -->
             <Search
               :value="search"
               placeholder="Find your note"
-              @search="search = $event" 
+              @search="search = $event"
             />
 
             <div class="icons">
@@ -60,7 +59,7 @@
             </div>
           </div>
 
-          <Notes :notes="notes" @remove="removeNote" :grid="grid" />
+          <Notes :notes="notesFilter" @remove="removeNote" :grid="grid" />
           <!--:notes это пропс, "notes" это массив с заметками
            @remove это названия эмита, removeNote это название метода который создаём здесь (App)-->
         </div>
@@ -113,7 +112,23 @@ export default {
       },
     };
   },
-
+  computed: { // прописываем поиск 
+    notesFilter () {
+      let array = this.notes,
+          search = this.search
+      if (!search) return array
+      // trim - убираем пробелы и приводим к нижнему регистру 
+      search = search.trim().toLowerCase() 
+      // фильтруем массив 
+      array = array.filter(function (item) {
+        if (item.title.toLowerCase().indexOf(search) !== -1) { //Метод indexOf() возвращает первый индекс, по которому данный элемент может быть найден в массиве или -1, если такого индекса нет.
+          return item
+        }
+      })
+      // проверка на ошибку 
+      return array;
+    }
+  },
   methods: {
     addNote() {
       let { title, descr } = this.note;
